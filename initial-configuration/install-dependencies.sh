@@ -29,12 +29,22 @@ export DOCKER_NETWORK_IF=br-`docker network create picsure | cut -c1-12`
 sysctl -w net.ipv4.conf.$DOCKER_NETWORK_IF.route_localnet=1
 iptables -t nat -I PREROUTING -i $DOCKER_NETWORK_IF -d 172.18.0.1 -p tcp --dport 3306 -j DNAT --to 127.0.0.1:3306
 iptables -t filter -I INPUT -i $DOCKER_NETWORK_IF -d 127.0.0.1 -p tcp --dport 3306 -j ACCEPT
+echo "[Unit]" > /etc/systemd/system/configure_docker_networks.service
+echo "After=docker.service" >> /etc/systemd/system/configure_docker_networks.service
+echo "" >> /etc/systemd/system/configure_docker_networks.service
+echo "[Service]" >> /etc/systemd/system/configure_docker_networks.service
+echo "ExecStart=/root/configure_docker_networking.sh" >> /etc/systemd/system/configure_docker_networks.service
+echo "" >> /etc/systemd/system/configure_docker_networks.service
+echo "[Install]" >> /etc/systemd/system/configure_docker_networks.service
+echo "WantedBy=default.target" >> /etc/systemd/system/configure_docker_networks.service
+
+echo "#!/bin/bash" > /root/configure_docker_networking.sh 
 echo "sysctl -w net.ipv4.conf.$DOCKER_NETWORK_IF.route_localnet=1" >> /root/configure_docker_networking.sh 
 echo "iptables -t nat -I PREROUTING -i $DOCKER_NETWORK_IF -d 172.18.0.1 -p tcp --dport 3306 -j DNAT --to 127.0.0.1:3306" >> /root/configure_docker_networking.sh 
 echo "iptables -t filter -I INPUT -i $DOCKER_NETWORK_IF -d 127.0.0.1 -p tcp --dport 3306 -j ACCEPT" >> /root/configure_docker_networking.sh 
 chmod +x /root/configure_docker_networking.sh 
-echo "@reboot root bash /root/configure_docker_networking.sh" >> /etc/crontab
-echo "" >> /etc/crontab
+systemctl daemon-reload
+systemctl enable configure_docker_networks
 
 echo "Starting mysql server"
 echo "bind-address=127.0.0.1" >> /etc/my.cnf
@@ -46,7 +56,7 @@ echo "password = `grep "temporary password" /var/log/mysqld.log | cut -d ' ' -f 
 
 echo "` < /dev/urandom tr -dc @^=+$*%_A-Z-a-z-0-9 | head -c${1:-24}`%4cA" > pass.tmp
 mysql -u root --connect-expired-password -e "alter user 'root'@'localhost' identified by '`cat pass.tmp`';flush privileges;"
-sed -i "s/password = .*/password = `cat pass.tmp`/g" ~/.my.cnf
+sed -i "s/password = .*/password = \"`cat pass.tmp`\"/g" ~/.my.cnf
 
 for addr in $(ifconfig | grep netmask | sed 's/  */ /g'| cut -d ' ' -f 3)
 do
@@ -84,6 +94,9 @@ echo "Creating Jenkins Log Path"
 mkdir -p /var/log/jenkins-docker-logs
 mkdir -p /var/jenkins_home
 cp -r jenkins/jenkins-docker/jobs /var/jenkins_home/jobs
+cp -r jenkins/jenkins-docker/config.xml /var/jenkins_home/config.xml
+cp -r jenkins/jenkins-docker/hudson.tasks.Maven.xml /var/jenkins_home/hudson.tasks.Maven.xml
+cp -r jenkins/jenkins-docker/scriptApproval.xml /var/jenkins_home/scriptApproval.xml
 mkdir -p /var/log/httpd-docker-logs/ssl_mutex
 
 export APP_ID=`uuidgen -r`
@@ -104,5 +117,9 @@ cp allConcepts.csv.tgz /usr/local/docker-config/hpds_csv/
 cd /usr/local/docker-config/hpds_csv/
 tar -xvzf allConcepts.csv.tgz
 
-
-
+docker run -d \
+-v /var/jenkins_home:/var/jenkins_home \
+-v /usr/local/docker-config:/usr/local/docker-config \
+-v /var/run/docker.sock:/var/run/docker.sock \
+-v /root/.my.cnf:/root/.my.cnf \
+-p 8080:8080 --name jenkins pic-sure-jenkins:LATEST
