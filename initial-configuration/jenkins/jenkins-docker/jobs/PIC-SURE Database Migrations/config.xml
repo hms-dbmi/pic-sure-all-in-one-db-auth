@@ -32,6 +32,18 @@
             sleep(time:10,unit:&quot;SECONDS&quot;) 
         }
     }
+
+    stage(&apos;Add DB Credentials&apos;) {
+        git url: &apos;https://github.com/hms-dbmi/psama-db-auth-overlay&apos;
+        docker.image(&apos;dbmi/pic-sure-db-migrations:pic-sure-db-migration_v1.0&apos;).inside(&apos;--network=picsure -v /usr/local/docker-config/flyway/picsure:/opt/flyway-migrations/picsure &quot;--entrypoint=&quot; &apos;) {
+            sh &quot;rm -rf /opt/flyway-migrations/picsure/sql&quot;
+            sh &quot;cp -R ./custom-migrations/picsure /opt/flyway-migrations/picsure/sql&quot;
+            sh &quot;/opt/flyway/flyway -X -baselineOnMigrate=true -configFiles=/opt/flyway-migrations/picsure/flyway-picsure.conf -table=flyway_custom_schema_history migrate&quot;
+            sleep(time:10,unit:&quot;SECONDS&quot;)
+        }
+    }
+
+
     stage(&apos;Project Specific Migrations&apos;) { 
         git url: env.project_specific_override_repo
         sh &quot;&quot;&quot;
