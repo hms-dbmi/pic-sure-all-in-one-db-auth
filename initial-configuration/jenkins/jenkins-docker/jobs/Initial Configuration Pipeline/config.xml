@@ -78,7 +78,7 @@ pipeline {
                     adminConfig: {
                         script {
                             def result = build job: &apos;Create Admin User&apos;, parameters: [
-                                [$class: &apos;StringParameterValue&apos;, name: &apos;EMAIL&apos;, value:env.EMAIL],
+                                [$class: &apos;StringParameterValue&apos;, name: &apos;EMAIL&apos;, value:env.EMAIL]]
                         }
                     },
                     tokenIntroToken: {
