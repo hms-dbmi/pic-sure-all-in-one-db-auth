@@ -30,6 +30,8 @@ RUN tar -xvzf /opt/apache-maven-3.6.3-bin.tar.gz -C /opt
 
 RUN rm /opt/apache-maven-3.6.3-bin.tar.gz
 
+RUN ln -s /opt/apache-maven-3.6.3/bin/mvn  /usr/local/bin/mvn
+
 RUN apt-get install jq -y
 
 RUN apt-get -y install uuid-runtime
