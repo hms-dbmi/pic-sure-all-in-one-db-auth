@@ -45,7 +45,8 @@
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>PIC-SURE Auth Micro-App Build</string>
-        <string>PIC-SURE Pipeline</string>
+        <string>PIC-SURE DB WAR Overlay</string>
+	<string>PIC-SURE Pipeline</string>
         <string>PIC-SURE Wildfly Image Build</string>
         <string>PIC-SURE-API Build</string>
         <string>PIC-SURE-HPDS Build</string>
