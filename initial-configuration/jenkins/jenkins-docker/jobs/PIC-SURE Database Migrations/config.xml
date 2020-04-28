@@ -38,7 +38,7 @@
         docker.image(&apos;dbmi/pic-sure-db-migrations:pic-sure-db-migration_v1.0&apos;).inside(&apos;--network=picsure -v /usr/local/docker-config/flyway/auth:/opt/flyway-migrations/auth &quot;--entrypoint=&quot; &apos;) {
             sh &quot;rm -rf /opt/flyway-migrations/auth/sql&quot;
             sh &quot;cp -R ./custom-migrations/auth /opt/flyway-migrations/auth/sql&quot;
-            sh &quot;/opt/flyway/flyway -X -baselineOnMigrate=true -configFiles=/opt/flyway-migrations/auth/flyway-auth.conf -table=flyway_custom_schema_history migrate&quot;
+            sh &quot;/opt/flyway/flyway -X -baselineOnMigrate=true -configFiles=/opt/flyway-migrations/auth/flyway-auth.conf -table=flyway_db_auth_history migrate&quot;
             sleep(time:10,unit:&quot;SECONDS&quot;)
         }
     }
