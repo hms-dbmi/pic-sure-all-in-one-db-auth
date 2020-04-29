@@ -25,14 +25,14 @@
   <builders>
     <hudson.tasks.Shell>
       <command>export USER_ID=`uuidgen -r`
-export PASS_ID=`uuidren -r`
+export PASS_ID=`uuidgen -r`
 export USER_ID_HEX=`echo $USER_ID | awk &apos;{ print toupper($0) }&apos;|sed &apos;s/-//g&apos;`
 export PASS_ID_HEX=`echo $PASS_ID | awk &apos;{ print toupper($0) }&apos;|sed &apos;s/-//g&apos;`
 
 docker run -i -v /root/.my.cnf:/root/.my.cnf --network=host mysql mysql -h 127.0.0.1 -e \
 &quot;INSERT INTO auth.credential VALUES (unhex(&apos;$PASS_ID_HEX&apos;), &apos;5f4dcc3b5aa765d61d8327deb882cf99&apos;, NOW(), null, 1);&quot; auth
 docker run -i -v /root/.my.cnf:/root/.my.cnf --network=host mysql mysql -h 127.0.0.1 -e \
-&quot;INSERT INTO auth.user VALUES (unhex(&apos;$USER_ID_HEX&apos;), null, &apos;{\&quot;email\&quot;:\&quot;$EMAIL\&quot;}&apos;, null, null, &apos;$EMAIL&apos;,0,null,1,null,unhex(&apos;$PASS_ID_HEX&apos;));&quot; auth
+&quot;INSERT INTO auth.user VALUES (unhex(&apos;$USER_ID_HEX&apos;), null, &apos;{\&quot;email\&quot;:\&quot;$EMAIL\&quot;}&apos;, null, null, &apos;$EMAIL&apos;,0, &apos;$EMAIL&apos;,1,null,unhex(&apos;$PASS_ID_HEX&apos;));&quot; auth
 docker run -i -v /root/.my.cnf:/root/.my.cnf --network=host mysql mysql -h 127.0.0.1 -e \
 &quot;INSERT INTO auth.user_role VALUES (unhex(&apos;$USER_ID_HEX&apos;), unhex(&apos;002DC366B0D8420F998F885D0ED797FD&apos;));&quot; auth
 docker run -i -v /root/.my.cnf:/root/.my.cnf --network=host mysql mysql -h 127.0.0.1 -e \
