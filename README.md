@@ -32,17 +32,12 @@ sudo yum -y install git
 
 git clone https://github.com/hms-dbmi/pic-sure-all-in-one-db-auth
 
-- Install the dependencies and build the Jenkins container
+- Install the dependencies and build the Jenkins container.  This process will start jenkins automatically.
 
 cd pic-sure-all-in-one/initial-configuration
 
 sudo ./install-dependencies.sh
 
-- Start Jenkins server
-
-cd ../
-
-sudo ./update-jenkins.sh
 
 - Browse to Jenkins server
 
@@ -56,9 +51,9 @@ On the Configuration tab click the button to the right of the Initial Configurat
 
 EMAIL - This is the email address that will be the initial admin user.
 
-PROJECT_SPECIFIC_OVERRIDE_REPOSITORY - This is the repo that contains the project specific overrides for your project.
+PROJECT_SPECIFIC_OVERRIDE_REPOSITORY - This is the repo that contains the project specific overrides for your project.  For a sample, see https://github.com/hms-dbmi/baseline-db-auth-pic-sure
 
-RELEASE_CONTROL_REPOSITORY - This is the repo that contains the build-spec.json file for your project. This file controls what code is built and deployed.
+RELEASE_CONTROL_REPOSITORY - This is the repo that contains the build-spec.json file for your project. This file controls what code is built and deployed.  For a sample, see https://github.com/hms-dbmi/baseline-pic-sure-release-control
 
 Make sure none of these fields have any leading or trailing whitespace, the values must be exact. Once you have entered the information, click the "Build" button.
 
