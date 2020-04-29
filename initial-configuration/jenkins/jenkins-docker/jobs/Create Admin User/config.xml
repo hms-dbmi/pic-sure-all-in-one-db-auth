@@ -25,7 +25,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>export USER_ID=`uuidgen -r`
-export PASS_ID = `uuidren -r`
+export PASS_ID=`uuidren -r`
 export USER_ID_HEX=`echo $USER_ID | awk &apos;{ print toupper($0) }&apos;|sed &apos;s/-//g&apos;`
 export PASS_ID_HEX=`echo $PASS_ID | awk &apos;{ print toupper($0) }&apos;|sed &apos;s/-//g&apos;`
 
