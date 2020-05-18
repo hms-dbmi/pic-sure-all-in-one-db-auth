@@ -33,6 +33,18 @@
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>GMAIL_USER</name>
+          <description>The gmail account name that should be used to send outbound email.  This field is optional</description>
+          <defaultValue>user@email.com</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>GMAIL_PASSWORD</name>
+          <description>The password for the gmail user.  This field is optional</description>
+          <defaultValue>changeit</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
   </properties>
@@ -67,6 +79,15 @@ pipeline {
                     picsureBuild: {
                         script {
                             def result = build job: &apos;PIC-SURE Pipeline&apos;
+                        }
+                    },
+		    emailConfig: {
+                        script {
+                            def result = build job: &apos;Configure Outbound Email Settings&apos;, parameters: [
+                                [$class: &apos;StringParameterValue&apos;, name: &apos;GMAIL_USER&apos;, value:env.GMAIL_USER],
+                                [$class: &apos;StringParameterValue&apos;, name: &apos;GMAIL_FROM&apos;, value: env.GMAIL_USER],
+                                [$class: &apos;StringParameterValue&apos;, name: &apos;GMAIL_PASSWORD&apos;, value: env.GMAIL_PASSWORD]]
+
                         }
                     }
                 )
