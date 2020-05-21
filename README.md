@@ -53,7 +53,7 @@ EMAIL - This is the email address that will be the initial admin user.
 
 PROJECT_SPECIFIC_OVERRIDE_REPOSITORY - This is the repo that contains the project specific overrides for your project.  For a sample, see https://github.com/hms-dbmi/baseline-db-auth-pic-sure
 
-RELEASE_CONTROL_REPOSITORY - This is the repo that contains the build-spec.json file for your project. This file controls what code is built and deployed.  For a sample, see https://github.com/hms-dbmi/baseline-pic-sure-release-control
+RELEASE_CONTROL_REPOSITORY - This is the repo that contains the build-spec.json file for your project. This file controls what code is built and deployed.  For a sample, see https://github.com/hms-dbmi/baseline-db-auth-pic-sure-release-control
 
 Make sure none of these fields have any leading or trailing whitespace, the values must be exact. Once you have entered the information, click the "Build" button.
 
