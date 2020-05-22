@@ -1,4 +1,4 @@
-# PIC-SURE all-in-one build with intergated database authentication
+# PIC-SURE all-in-one build with integrated database authentication
 
 Assumptions:
 
