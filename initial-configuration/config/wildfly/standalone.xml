@@ -450,10 +450,8 @@
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:jsf:1.1"/>
         <subsystem xmlns="urn:jboss:domain:mail:3.0">
-            <mail-session name="java:jboss/mail/gmail" from="${env.EMAIL_USERNAME_FROM:emailFromName}" jndi-name="java:jboss/mail/gmail" debug="false">
-                <smtp-server outbound-socket-binding-ref="mail-smtp-gmail" tls="true"
-									username="${env.EMAIL_USERNAME:missingEmailUsername}"
-										password="${env.EMAIL_PASSWORD:missingEmailPassword}" />
+            <mail-session name="java:jboss/mail/gmail" from="__EMAIL_FROM_ADDR__" jndi-name="java:jboss/mail/gmail" debug="false">
+                <smtp-server outbound-socket-binding-ref="mail-smtp-gmail" tls="true" username="__EMAIL_USER__" password="__EMAIL_PASSWORD__" />
             </mail-session>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:naming:2.0">
@@ -475,10 +473,10 @@
                 <simple name="java:global/clientSecretIsBase64" value="False"/>
                 <simple name="java:global/userActivationTemplatePath" value="/psama/activation"/>
                 <simple name="java:global/userActivationReplyTo" value="__USER_ACTIVATION_REPLY_TO__"/>
-                <simple name="java:global/templatePath" value="/usr/local/docker-config/templates" />
+                <simple name="java:global/templatePath" value="/opt/jboss/wildfly/standalone/configuration/emailTemplates/" />
                 <simple name="java:global/tosEnabled" value="False" />
                 <simple name="java:global/auth0host" value="https://__AUTH0_DOMAIN__.auth0.com/" />
-                <simple name="java:global/emailTemplatePath" value="/usr/local/docker-config/templates" />
+                <simple name="java:global/emailTemplatePath" value="/opt/jboss/wildfly/standalone/configuration/emailTemplates/" />
                 <simple name="java:global/accessGrantEmailSubject" value="__ACCESS_GRANTED_EMAIL_SUBJECT__" />
                 <simple name="java:global/deniedEmailEnabled" value="false" />
                 <simple name="java:global/adminUsers" value="__ADMIN_USERS__" />
