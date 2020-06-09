@@ -51,12 +51,6 @@ Note: Work with your local IT department to ensure that this port is not availab
 Click the Configuration tab, then click the button to the right of the Initial Configuration Pipeline job. It resembles a clock with a green triangle on it. 
 7. Provide the following information:
 
-    - AUTH0_CLIENT_ID: This is the client_id of your Auth0 Application
-
-    - AUTH0_CLIENT_SECRET: This is the client_secret of your Auth0 Application
-
-    - AUTH0_TENANT: This is the first part of your Auth0 domain, for example if your domain is avillachlab.auth0.com you would   enter avillachlab in this field.
-
     - EMAIL: This is the Google account that will be the initial admin user.
 
     - PROJECT_SPECIFIC_OVERRIDE_REPOSITORY: This is the repo that contains the project specific overrides for your project.  For an, see https://github.com/hms-dbmi/baseline-db-auth-pic-sure.
