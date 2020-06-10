@@ -51,7 +51,13 @@ Note: Work with your local IT department to ensure that this port is not availab
 Click the Configuration tab, then click the button to the right of the Initial Configuration Pipeline job. It resembles a clock with a green triangle on it. 
 7. Provide the following information:
 
+
+
     - EMAIL: This is the Google account that will be the initial admin user.
+    
+    - GMAIL_USER: This is the Google email account for sending outbound emails.
+    
+    - GMAIL_PASSWORD: This is the password to the GMAIL_USER account.
 
     - PROJECT_SPECIFIC_OVERRIDE_REPOSITORY: This is the repo that contains the project specific overrides for your project.  For an, see https://github.com/hms-dbmi/baseline-db-auth-pic-sure.
 
