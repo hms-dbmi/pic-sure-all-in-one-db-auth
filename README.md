@@ -38,9 +38,7 @@ cd pic-sure-all-in-one/initial-configuration
 
 sudo ./install-dependencies.sh
 
-4. Browse to Jenkins server.
-
-5. Point your browser at your server's IP on port 8080. 
+4. Browse to Jenkins server by navigating to your server's IP on port 8080. 
 
 For example, if your server has IP 10.109.190.146, please browse to http://10.109.190.146:8080
 
