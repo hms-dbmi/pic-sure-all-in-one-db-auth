@@ -1,0 +1,49 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>LOAD_DIRECTORY</name>
+          <description>The path to the directory containing a vcfIndex.tsv describing the vcf files to load</description>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>
+rm -rf /usr/local/docker-config/hpds_temp
+mkdir -p /usr/local/docker-config/hpds_temp/all
+
+rm -rf /usr/local/docker-config/hpds_bak/all
+mkdir -p rm -rf /usr/local/docker-config/hpds_bak/all
+
+cp /usr/local/docker-config/hpds/encryption_key $LOAD_DIRECTORY/encryption_key 
+
+docker run \
+-v $LOAD_DIRECTORY:/opt/local/hpds \
+-v $LOAD_DIRECTORY:vcfLoad:/opt/local/hpds/vcfInput \
+-v /usr/local/docker-config/hpds_temp/all:/opt/local/hpds/vcfOutput \
+-e HEAPSIZE=4096 -e LOADER_NAME=CSVLoader hms-dbmi/pic-sure-hpds-etl:LATEST &amp;&amp; \
+
+mv /usr/local/docker-config/hpds/all /usr/local/docker-config/hpds_bak/all &amp;&amp; \
+mv /usr/local/docker-config/hpds_temp/all /usr/local/docker-config/hpds/all
+
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>
