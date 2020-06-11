@@ -24,22 +24,14 @@
   <builders>
     <hudson.tasks.Shell>
       <command>
-rm -rf /usr/local/docker-config/hpds_temp
-mkdir -p /usr/local/docker-config/hpds_temp/all
 
-rm -rf /usr/local/docker-config/hpds_bak/all
-mkdir -p rm -rf /usr/local/docker-config/hpds_bak/all
-
-cp /usr/local/docker-config/hpds/encryption_key $LOAD_DIRECTORY/encryption_key 
+cp $LOAD_DIRECTORY/vcfIndex.tsv /usr/local/docker-config/hpds/
 
 docker run \
--v $LOAD_DIRECTORY:/opt/local/hpds \
--v $LOAD_DIRECTORY:vcfLoad:/opt/local/hpds/vcfInput \
--v /usr/local/docker-config/hpds_temp/all:/opt/local/hpds/vcfOutput \
--e HEAPSIZE=4096 -e LOADER_NAME=CSVLoader hms-dbmi/pic-sure-hpds-etl:LATEST &amp;&amp; \
-
-mv /usr/local/docker-config/hpds/all /usr/local/docker-config/hpds_bak/all &amp;&amp; \
-mv /usr/local/docker-config/hpds_temp/all /usr/local/docker-config/hpds/all
+-v /usr/local/docker-config/hpds:/opt/local/hpds \
+-v $LOAD_DIRECTORY/vcfLoad:/opt/local/hpds/vcfInput \
+-v /usr/local/docker-config/hpds/all:/opt/local/hpds/vcfOutput \
+-e HEAPSIZE=4096 -e LOADER_NAME=VCFLocalLoader hms-dbmi/pic-sure-hpds-etl:LATEST &amp;&amp; \
 
 </command>
     </hudson.tasks.Shell>
