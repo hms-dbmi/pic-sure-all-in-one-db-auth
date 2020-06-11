@@ -1,7 +1,15 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description></description>
+  <description>This job loads genomic (VCF) data into the HPDS format.  it expects a directoy containing two elements:&#xd;
+&#xd;
+vcfIndex.tsv - a file describing the VCF file(s) to be loaded&#xd;
+&#xd;
+vcfLoad/ - a directory containing the vcf file(s) that will be read and converted to the hpds format&#xd;
+&#xd;
+When this job is complete, restart the PIC-SURE services for access to the data.
+
+</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.model.ParametersDefinitionProperty>
