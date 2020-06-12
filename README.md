@@ -47,9 +47,8 @@ Note: Work with your local IT department to ensure that this port is not availab
 6. In Jenkins you will see 5 tabs: All, Configuration, Deployment, PIC-SURE Builds, Supporting Jobs
 
 Click the Configuration tab, then click the button to the right of the Initial Configuration Pipeline job. It resembles a clock with a green triangle on it. 
+
 7. Provide the following information:
-
-
 
     - EMAIL: This is the Google account that will be the initial admin user.
     
